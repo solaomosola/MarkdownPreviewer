@@ -1,0 +1,50 @@
+
+class MDown extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      input:""
+    }
+ this.handleChange=this.handleChange.bind(this);
+  }
+  
+  componentDidMount(){
+   
+  }
+  
+ handleChange=(event)=>{
+   let input = event.target.value;
+   
+   this.setState({input});
+ }
+  render(){
+    return (
+    <div class="row">
+      <div className="col" id="j">
+        <textarea className="form-control" rows="5" onChange={this.handleChange} id="editor">{this.state.input}
+        
+        </textarea>
+        </div>
+      <div className="col" >
+        
+        <MakeInnerHtml data={this.state.input}/>
+        </div>  
+      </div>
+    )
+  }
+}
+let createMarkup=(data)=>{
+  
+  return {__html: marked(data,{gfm:true,breaks:true})};
+}
+
+let MakeInnerHtml = ({data})=>{
+  return(
+  <div dangerouslySetInnerHTML=      {createMarkup(data)} id="preview"/>
+  
+  )
+}
+
+let container = document.querySelector('#content');
+ReactDOM.render(<MDown />,container);
+
